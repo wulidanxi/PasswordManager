@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_web_util"
+        android:shortcutDisabledMessage="@string/web_util"
+        android:shortcutId="web_util"
+        android:shortcutLongLabel="@string/web_util"
+        android:shortcutShortLabel="@string/web_util">
+
+    <intent
+        android:action="android.intent.action.VIEW"
+        android:targetClass="com.wulidanxi.mcenter.ui.WebAddressActivity"
+        android:targetPackage="com.wulidanxi.mcenter" />
+    <categories android:name="android.shortcut.conversation" />
+</shortcut>
+</shortcuts>

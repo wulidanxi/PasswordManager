@@ -1,0 +1,59 @@
+<resources>
+    <string name="app_name">MCenter</string>
+    <string name="channel">渠道</string>
+    <string name="account">用户名</string>
+    <string name="pwd">密码</string>
+    <string name="add_time">更新时间</string>
+    <string name="title_icon">channel_icon</string>
+    <string name="delete">删除</string>
+    <string name="add">添加</string>
+    <string name="search">搜索</string>
+    <string name="save">保存</string>
+    <string name="ed_channel">渠道：</string>
+    <string name="account_pwd">账号/密码</string>
+    <string name="activity_label">添加数据</string>
+    <string name="DarkMode">深色模式</string>
+    <string name="LightMode">浅色模式</string>
+    <string name="modify">修改</string>
+    <string name="output_excel">导出excel</string>
+    <string name="read_excel">导入excel</string>
+    <string-array name="spinner_name">
+        <item>QQ</item>
+        <item>微信</item>
+        <item>BiliBili</item>
+        <item>Other</item>
+    </string-array>
+    <string name="title_activity_settings">设置</string>
+
+    <string name="theme">主题</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">信息</string>
+    <string name="sync_header">常规</string>
+
+    <!-- Messages Preferences -->
+    <string name="version_title">版本</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="exit">退出</string>
+    <string name="web_hint">输入网址</string>
+    <string name="hint_not_web">输入混淆网址</string>
+    <string name="confusion">混淆</string>
+    <string name="no_confusion">去混淆</string>
+    <string name="hint_content">混淆内容</string>
+    <string name="web_util">网址小工具</string>
+    <string name="biometricprompt_fingerprint_verification">验证指纹</string>
+    <string name="biometricprompt_cancel">取消</string>
+    <string name="biometricprompt_tip">未添加指纹</string>
+    <string name="biometricprompt_finger_add">请添加指纹</string>
+    <string name="biometricprompt_finger_add_confirm">现在去</string>
+    <string name="biometricprompt_verify_failed">指纹验证失败</string>
+    <string name="fingerprint_usepwd">使用密码验证</string>
+    <string name="fingerprint_cancel">取消</string>
+    <string name="biometricprompt_finger_hw_unavailable">未检测到指纹设备</string>
+</resources>

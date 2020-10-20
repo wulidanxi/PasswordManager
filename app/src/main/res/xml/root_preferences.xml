@@ -1,0 +1,50 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <PreferenceCategory app:title="@string/sync_header">
+
+        <ListPreference
+            android:icon="@drawable/ic_theme"
+            android:defaultValue="light"
+            android:entries="@array/theme_mode_entries"
+            android:entryValues="@array/theme_mode_values"
+            android:key="theme"
+            android:title="@string/theme"
+            android:persistent="true"
+            app:useSimpleSummaryProvider="true"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="反馈">
+        <Preference
+            android:icon="@drawable/ic_feedback"
+            app:key="feedback"
+            app:title="待开发"
+            app:summary="待开发"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/messages_header">
+
+        <Preference
+            android:icon="@drawable/ic_opensource"
+            app:key="open_lib"
+            app:title="开源相关">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://github.com/wulidanxi/PasswordManager"/>
+        </Preference>
+        <Preference
+            android:icon="@drawable/ic_android"
+            app:key="author"
+            app:title="开发者"
+            app:summary="wulidanxi"/>
+        <Preference
+            android:icon="@drawable/ic_version"
+            app:key="version"
+            app:title="@string/version_title"
+            app:summary="test"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
