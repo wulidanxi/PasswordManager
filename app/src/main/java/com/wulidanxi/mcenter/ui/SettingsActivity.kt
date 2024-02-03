@@ -3,7 +3,6 @@ package com.wulidanxi.mcenter.ui
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -12,22 +11,24 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.wulidanxi.mcenter.R
 import com.wulidanxi.mcenter.util.PackageUtils
-import kotlinx.android.synthetic.main.settings_activity.*
+import com.wulidanxi.mcenter.databinding.SettingsActivityBinding
 
 
 class SettingsActivity : AppCompatActivity() {
+    private lateinit var binding: SettingsActivityBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         initDarkMode()
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.settings_activity)
+        binding = SettingsActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.settings, SettingsFragment())
             .commit()
-        setSupportActionBar(toolbar_setting)
-        toolbar_setting.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
-        toolbar_setting.setNavigationOnClickListener {
+        setSupportActionBar(binding.toolbarSetting)
+        binding.toolbarSetting.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
+        binding.toolbarSetting.setNavigationOnClickListener {
             setResult(0)
             finish()
         }
@@ -64,8 +65,8 @@ class SettingsActivity : AppCompatActivity() {
             findPreference<Preference>("theme")?.onPreferenceChangeListener = this
         }
 
-        override fun onPreferenceChange(preference: Preference?, newValue: Any?): Boolean {
-            if (preference?.key == "theme"){
+        override fun onPreferenceChange(preference: Preference, newValue: Any?): Boolean {
+            if (preference.key == "theme"){
                 val date = preference.summary.toString()
                 Log.d("监听", "onPreferenceChange: 进入监听")
                 Log.d("当前值", "onPreferenceChange:$date")

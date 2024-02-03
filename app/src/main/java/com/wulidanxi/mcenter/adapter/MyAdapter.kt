@@ -2,17 +2,17 @@ package com.wulidanxi.mcenter.adapter
 
 import android.view.View
 import com.wulidanxi.mcenter.R
+import com.wulidanxi.mcenter.databinding.ItemShowBinding
 import com.wulidanxi.mcenter.db.Content
-import kotlinx.android.synthetic.main.item_show.view.*
 
 class MyAdapter(mList: List<Content>?, mLayoutId: Int?) : KtBaseAdapter<Content>(mList, mLayoutId) {
-    override fun convert(itemView: View?, item: Content) {
-        itemView!!.channel.text = item.channel
-        itemView.account.text = item.account
-        itemView.password.text = item.password
-        itemView.time.text = item.date
+    override fun convert(itemShowBinding: ItemShowBinding, item: Content) {
+        itemShowBinding.channel.text = item.channel
+        itemShowBinding.account.text = item.account
+        itemShowBinding.password.text = item.password
+        itemShowBinding.time.text = item.date
         val resId = getResId(item.channel)
-        itemView.iv_channel.setImageResource(resId)
+        itemShowBinding.ivChannel.setImageResource(resId)
     }
 
     private fun getResId(channel: String): Int {

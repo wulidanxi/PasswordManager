@@ -4,40 +4,40 @@ import ExtractSite
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import com.blankj.utilcode.util.ToastUtils
 import com.wulidanxi.mcenter.R
-import kotlinx.android.synthetic.main.activity_add.*
-import kotlinx.android.synthetic.main.activity_web_address.*
-import java.util.*
+import com.wulidanxi.mcenter.databinding.ActivityWebAddressBinding
+
 
 class WebAddressActivity : AppCompatActivity(), View.OnClickListener {
+    private lateinit var binding:ActivityWebAddressBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_web_address)
-        setSupportActionBar(toolbar_nat)
-        toolbar_nat.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
-        toolbar_nat.setNavigationOnClickListener {
+        binding = ActivityWebAddressBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.toolbarNat)
+        binding.toolbarNat.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
+        binding.toolbarNat.setNavigationOnClickListener {
             setResult(0)
             finish()
         }
 
-        bt_confusion.setOnClickListener(this)
-        bt_no_confusion.setOnClickListener(this)
+        binding.btConfusion.setOnClickListener(this)
+        binding.btNoConfusion.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.bt_confusion -> {
-                if (!ed_content.text.isNullOrEmpty()) {
-                    if (!ed_web.text.isNullOrEmpty() && ed_not_web.text.isNullOrEmpty()) {
-                        val webSite = ed_web.text.toString()
-                        val msg = ed_content.text.toString()
+                if (!binding.edContent.text.isNullOrEmpty()) {
+                    if (!binding.edWeb.text.isNullOrEmpty() && binding.edNotWeb.text.isNullOrEmpty()) {
+                        val webSite = binding.edWeb.text.toString()
+                        val msg = binding.edContent.text.toString()
                         val result = ExtractSite.addChinese(webSite, msg)
                         if (result == "error"){
                             ToastUtils.showShort("混淆内容存在非中文字符!")
                         }else{
-                            ed_not_web.setText(result)
+                            binding.edNotWeb.setText(result)
                         }
                     }
                 }else{
@@ -45,10 +45,10 @@ class WebAddressActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
             R.id.bt_no_confusion -> {
-                if (!ed_not_web.text.isNullOrEmpty()){
-                    val confusionData = ed_not_web.text.toString()
+                if (!binding.edNotWeb.text.isNullOrEmpty()){
+                    val confusionData = binding.edNotWeb.text.toString()
                     val result = ExtractSite.removeChinese(confusionData)
-                    ed_web.setText(result)
+                    binding.edWeb.setText(result)
                 }else{
                     ToastUtils.showShort("待混淆内容不能为空!")
                 }

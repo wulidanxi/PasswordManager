@@ -3,14 +3,11 @@ package com.wulidanxi.mcenter.ui
 /**
  * update by wulidanxi on 2020/10/20
  */
-
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
@@ -31,19 +28,19 @@ import com.stars.permissionx.PermissionEasier
 import com.wulidanxi.mcenter.R
 import com.wulidanxi.mcenter.adapter.KtBaseAdapter
 import com.wulidanxi.mcenter.adapter.MyAdapter
+import com.wulidanxi.mcenter.databinding.ActivityMainBinding
 import com.wulidanxi.mcenter.db.Content
 import com.wulidanxi.mcenter.db.PasswordDatabase
 import com.wulidanxi.mcenter.util.ExcelUtils
 import com.wulidanxi.mcenter.util.java.fingerprint.FingerprintCallback
 import com.wulidanxi.mcenter.util.java.fingerprint.FingerprintVerifyManager
 import com.wulidanxi.mcenter.view.RecyclerViewDivider
-import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity(), View.OnClickListener,
     NavigationView.OnNavigationItemSelectedListener, MenuItem.OnMenuItemClickListener {
-
+    private lateinit var binding: ActivityMainBinding
     private var mList: MutableList<Content> = mutableListOf()
     private var mAdapter: MyAdapter = MyAdapter(mList, R.layout.item_show)
     private var filePath =
@@ -57,35 +54,34 @@ class MainActivity : AppCompatActivity(), View.OnClickListener,
     override fun onCreate(savedInstanceState: Bundle?) {
         initDarkMode()
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
 
         builder = FingerprintVerifyManager.Builder(this@MainActivity)
 
-        val toggle = ActionBarDrawerToggle(this, drawer_layout, toolbar, 0, 0)
-        drawer_layout.addDrawerListener(toggle)
+        val toggle = ActionBarDrawerToggle(this, binding.drawerLayout, binding.toolbar, 0, 0)
+        binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
         // 侧滑栏部分
-        val headerView = navigation_view.getHeaderView(0)
-        val webUtil = navigation_view.menu.findItem(R.id.web_util)
-        navigation_view.setNavigationItemSelectedListener(this)
+        val headerView = binding.navigationView.getHeaderView(0)
+        val webUtil = binding.navigationView.menu.findItem(R.id.web_util)
+        binding.navigationView.setNavigationItemSelectedListener(this)
         webUtil.setOnMenuItemClickListener(this)
-        footer_item_out.setOnClickListener(this)
-        footer_item_setting.setOnClickListener(this)
+        binding.footerItemOut.setOnClickListener(this)
+        binding.footerItemSetting.setOnClickListener(this)
         // 动态权限获取
-        PermissionEasier.INSTANCE.requestNoDenied(this, permissions)
-        if (Build.VERSION.SDK_INT >= 30) {
-            PermissionEasier.INSTANCE.requestNoDenied(
-                this,
-                arrayOf(Manifest.permission.MANAGE_EXTERNAL_STORAGE)
-            )
-        }
+        //PermissionEasier.INSTANCE.requestNoDenied(this, permissions)
+        //PermissionEasier.INSTANCE.requestNoDenied(
+        //    this,
+        //    arrayOf(Manifest.permission.MANAGE_EXTERNAL_STORAGE)
+        //)
         // 数据库实例化
         val contentDao = PasswordDatabase.getDatabase(this).contentDao()
         // RecyclerView 适配器设置
         val layoutManager = LinearLayoutManager(this)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
-        rv_content.layoutManager = layoutManager
+        binding.rvContent.layoutManager = layoutManager
         thread {
             for ((index, content) in contentDao.loadAllContent().withIndex()) {
                 mList.add(index, content)
@@ -98,11 +94,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener,
                 15,
                 resId
             )
-            rv_content.addItemDecoration(decoration)
-            rv_content.post {
-                rv_content.adapter = mAdapter
+            binding.rvContent.addItemDecoration(decoration)
+            binding.rvContent.post {
+                binding.rvContent.adapter = mAdapter
                 if (intent.extras != null) {
-                    rv_content.scrollBy(0, intent.extras!!.getInt("scrollY", 0))
+                    binding.rvContent.scrollBy(0, intent.extras!!.getInt("scrollY", 0))
                     Log.d("接收的距离", intent.extras!!.getInt("scrollY", 0).toString())
                 }
             }
@@ -117,12 +113,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener,
 
     override fun onClick(v: View?) {
         when (v) {
-            footer_item_setting -> {
+            binding.footerItemSetting -> {
                 Log.d("TAG", "onClick: 进入设置")
                 val intent = Intent(this, SettingsActivity::class.java)
                 startActivity(intent)
             }
-            footer_item_out -> {
+            binding.footerItemOut -> {
                 Log.d("TAG", "onClick:退出 ")
                 finish()
             }
@@ -140,7 +136,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener,
                 }
                 runOnUiThread {
                     mAdapter.updateData(mList)
-                    rv_content.adapter = mAdapter
+                    binding.rvContent.adapter = mAdapter
                 }
             }
         }
@@ -161,7 +157,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener,
                 )
                 method.isAccessible = true
                 method.invoke(menu, true)
-            } catch (e: java.lang.Exception) {
+            } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
@@ -241,7 +237,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener,
                         }
                         runOnUiThread {
                             mAdapter.updateData(mList)
-                            rv_content.adapter = mAdapter
+                            binding.rvContent.adapter = mAdapter
                         }
                     }
                 }
@@ -251,7 +247,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     private fun initDarkMode() {
-        val sharedPreferences = getSharedPreferences("darkMode", Context.MODE_PRIVATE)
+        val sharedPreferences = getSharedPreferences("darkMode", MODE_PRIVATE)
         when (sharedPreferences.getInt("open", 2)) {
             1 -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
@@ -284,7 +280,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener,
                             }
                             runOnUiThread {
                                 mAdapter.updateData(mList)
-                                rv_content.adapter = mAdapter
+                                binding.rvContent.adapter = mAdapter
                             }
                         }
                     }
@@ -314,8 +310,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener,
         return false
     }
 
-    override fun onMenuItemClick(item: MenuItem?): Boolean {
-        when (item!!.itemId) {
+    override fun onMenuItemClick(p0: MenuItem): Boolean {
+        when (p0.itemId) {
             R.id.web_util -> {
                 val intent = Intent(applicationContext, WebAddressActivity::class.java)
                 builder.callback(fingerprintCallback)
@@ -386,4 +382,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener,
                 .create().show()
         }
     }
+
+//    override fun onMenuItemClick(p0: MenuItem): Boolean {
+//        TODO("Not yet implemented")
+//    }
 }

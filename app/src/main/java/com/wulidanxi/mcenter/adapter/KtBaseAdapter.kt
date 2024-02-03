@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.wulidanxi.mcenter.adapter.KtBaseAdapter.KtViewHolder
+import com.wulidanxi.mcenter.databinding.ItemShowBinding
 
 /**
  * Created by zfw on 2019/7/30 15:15
@@ -45,8 +46,9 @@ open class KtBaseAdapter<T>(private var mList: List<T>?, private var mLayoutId: 
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): KtViewHolder {
-        val v = LayoutInflater.from(parent.context).inflate(this.mLayoutId!!, parent, false)
-        return KtViewHolder(v)
+       //  val v = LayoutInflater.from(parent.context).inflate(this.mLayoutId!!, parent, false)
+        val itemShowBinding = ItemShowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return KtViewHolder(itemShowBinding)
     }
 
     override fun onBindViewHolder(holder: KtViewHolder, position: Int) {
@@ -59,18 +61,18 @@ open class KtBaseAdapter<T>(private var mList: List<T>?, private var mLayoutId: 
             itemLongClick?.onItemLongClick(holder.itemView, position)
             true
         }
-        convert(holder.itemView, item)
+        convert(holder.getViewBinding(), item)
     }
 
-    open fun convert(itemView: View?, item: T) {
+    open fun convert(itemShowBinding: ItemShowBinding, item: T) {
 
     }
 
     override fun getItemCount(): Int = mList!!.size
 
-    class KtViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView!!) {
-        fun <T : View?> getView(id: Int): T {
-            return itemView.findViewById<T>(id)
+    class KtViewHolder(private val itemShowBinding: ItemShowBinding) : RecyclerView.ViewHolder(itemShowBinding.root) {
+        fun getViewBinding() : ItemShowBinding{
+            return itemShowBinding
         }
     }
 }

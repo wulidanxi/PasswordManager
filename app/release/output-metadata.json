@@ -1,18 +1,20 @@
 {
-  "version": 2,
+  "version": 3,
   "artifactType": {
     "type": "APK",
     "kind": "Directory"
   },
   "applicationId": "com.wulidanxi.mcenter",
-  "variantName": "processReleaseResources",
+  "variantName": "release",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
-      "versionCode": 201020,
-      "versionName": "2.0.0",
-      "outputFile": "../output/MCenter_v2.0.0(2020102014).apk"
+      "attributes": [],
+      "versionCode": 240203,
+      "versionName": "3.0.1",
+      "outputFile": "MCenter_v3.0.1(2024020317).apk"
     }
-  ]
+  ],
+  "elementType": "File"
 }
